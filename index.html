@@ -26,8 +26,6 @@
       <div class="button-container">
         <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
       </div>
-      <!-- ✅ Removed the green inline message -->
-      <!-- <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p> -->
     </div>
     <div class="no-thanks">No, Thanks</div>
   </div>
@@ -63,7 +61,8 @@
 
       // Reset UI
       result.innerHTML = "";
-      couponBox.style.display = "none";
+      couponBox.style.visibility = "hidden";
+      couponBox.style.opacity = "0";
       result.style.color = "#D9534F";
 
       if (!/^\d{9}$/.test(input)) {
@@ -102,10 +101,15 @@
           }
 
           popupTitle.innerText = "Congratulations!";
-          inputField.style.display = "none";
-          checkButton.style.display = "none";
-          discountText.style.display = "none";
-          couponBox.style.display = "flex";
+          inputField.style.visibility = "hidden";
+          inputField.style.opacity = "0";
+          checkButton.style.visibility = "hidden";
+          checkButton.style.opacity = "0";
+          discountText.style.visibility = "hidden";
+          discountText.style.opacity = "0";
+
+          couponBox.style.visibility = "visible";
+          couponBox.style.opacity = "1";
 
         } catch (error) {
           // Remove loading spinner
@@ -126,10 +130,15 @@
           couponCode.innerText = "FIRST30";
 
           popupTitle.innerText = "Congratulations!";
-          inputField.style.display = "none";
-          checkButton.style.display = "none";
-          discountText.style.display = "none";
-          couponBox.style.display = "flex";
+          inputField.style.visibility = "hidden";
+          inputField.style.opacity = "0";
+          checkButton.style.visibility = "hidden";
+          checkButton.style.opacity = "0";
+          discountText.style.visibility = "hidden";
+          discountText.style.opacity = "0";
+
+          couponBox.style.visibility = "visible";
+          couponBox.style.opacity = "1";
         }, 2000); // Simulate loading for 2 seconds
       }
     }
