@@ -203,3 +203,25 @@ body {
 .button-container {
     margin-top: 10px; /* Add spacing between the coupon code and the button */
 }
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 20px; /* Position the toast 20px above the bottom of the screen */
+    left: 50%; /* Center the toast horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    background-color: #333; /* Dark background for the toast */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding for better appearance */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size for the text */
+    opacity: 0; /* Initially hidden */
+    visibility: hidden; /* Initially not visible */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-in and fade-out */
+    z-index: 1000; /* Ensure the toast appears above other elements */
+}
+
+.toast.show {
+    opacity: 1; /* Make the toast visible */
+    visibility: visible; /* Make the toast visible */
+}

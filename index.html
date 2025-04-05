@@ -23,7 +23,6 @@
           </button>
         </div>
       </div>
-      <!-- Add spacing between the coupon code and the button -->
       <div class="button-container">
         <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
       </div>
@@ -31,6 +30,9 @@
     </div>
     <div class="no-thanks">No, Thanks</div>
   </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Copied to clipboard!</div>
 
   <script>
     function isValidCardInput(cardNumber) {
@@ -121,17 +123,22 @@
       }
     }
 
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.classList.add("show");
+
+      // Hide the toast after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
     function copyCouponCode() {
       const code = document.getElementById("couponCode").innerText;
       navigator.clipboard.writeText(code).then(() => {
-        // Show the confirmation message on the screen
-        const copyMessage = document.getElementById("copyMessage");
-        copyMessage.style.display = "block";
-
-        // Hide the message after 2 seconds
-        setTimeout(() => {
-          copyMessage.style.display = "none";
-        }, 2000);
+        // Show the toast notification
+        showToast("Copied to clipboard!");
       }).catch(err => {
         console.error("Failed to copy coupon code: ", err);
       });
@@ -146,7 +153,8 @@
       redeemButton.disabled = true;
 
       navigator.clipboard.writeText(code).then(() => {
-        document.getElementById("copyMessage").style.display = "block";
+        // Show the toast notification
+        showToast("Copied to clipboard!");
 
         // Wait for 3 seconds before redirecting
         setTimeout(() => {
