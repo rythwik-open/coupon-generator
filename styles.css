@@ -51,8 +51,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 150px; /* Match the width of the Redeem Now button */
-    height: 40px; /* Match the height of the Redeem Now button */
+    width: fit-content; /* Adjust width to fit the content */
+    padding: 10px 20px; /* Add padding for better appearance */
     font-size: 16px;
     font-weight: bold;
     color: white;
