@@ -48,10 +48,9 @@ body {
 
 /* Check Offer Button */
 .check-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block; /* Ensure the button width is based on its content */
     width: fit-content; /* Adjust width to fit the content */
+    max-width: fit-content; /* Prevent the button from stretching */
     padding: 10px 20px; /* Add padding for better appearance */
     font-size: 16px;
     font-weight: bold;
@@ -61,7 +60,6 @@ body {
     border-radius: 5px; /* Match the border radius */
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.3s ease;
-    position: relative;
     margin: 0 auto; /* Center the button horizontally */
 }
 
