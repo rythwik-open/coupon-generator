@@ -121,7 +121,14 @@
     function copyCouponCode() {
       const code = document.getElementById("couponCode").innerText;
       navigator.clipboard.writeText(code).then(() => {
-        alert("Coupon code copied to clipboard!");
+        // Show the confirmation message on the screen
+        const copyMessage = document.getElementById("copyMessage");
+        copyMessage.style.display = "block";
+
+        // Hide the message after 2 seconds
+        setTimeout(() => {
+          copyMessage.style.display = "none";
+        }, 2000);
       }).catch(err => {
         console.error("Failed to copy coupon code: ", err);
       });
