@@ -55,7 +55,6 @@
       const result = document.getElementById("resultMessage");
       const couponBox = document.getElementById("couponBox");
       const couponCode = document.getElementById("couponCode");
-      const loader = document.getElementById("loader");
       const inputField = document.getElementById("cardInput");
       const checkButton = document.getElementById("checkButton");
       const discountText = document.getElementById("discountText");
@@ -78,14 +77,19 @@
         return;
       }
 
-      loader.style.display = "block";
+      // Add loading spinner inside the button
+      checkButton.classList.add("loading");
+      checkButton.disabled = true;
 
       if (cardType === "visa") {
         // Call the API only for Visa cards
         try {
           const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
           const data = await res.json();
-          loader.style.display = "none";
+
+          // Remove loading spinner
+          checkButton.classList.remove("loading");
+          checkButton.disabled = false;
 
           if (data.coupon === 1) {
             result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
@@ -103,13 +107,19 @@
           couponBox.style.display = "flex";
 
         } catch (error) {
-          loader.style.display = "none";
+          // Remove loading spinner
+          checkButton.classList.remove("loading");
+          checkButton.disabled = false;
+
           result.innerHTML = "🚫 Error connecting to server. Try again.";
         }
       } else {
         // Handle non-Visa cards with a loading animation
         setTimeout(() => {
-          loader.style.display = "none";
+          // Remove loading spinner
+          checkButton.classList.remove("loading");
+          checkButton.disabled = false;
+
           result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
           result.style.color = "#5588D1";
           couponCode.innerText = "FIRST30";
@@ -119,7 +129,7 @@
           checkButton.style.display = "none";
           discountText.style.display = "none";
           couponBox.style.display = "flex";
-        }, 2000); // Show loader for 2 seconds
+        }, 2000); // Simulate loading for 2 seconds
       }
     }
 

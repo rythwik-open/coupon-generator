@@ -46,7 +46,7 @@ body {
     margin-bottom: 16px;
 }
 
-/* Claim Offer Button */
+/* Check Offer Button */
 .check-button {
     width: 100%;
     padding: 10px;
@@ -58,6 +58,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.3s ease;
+    position: relative;
 }
 
 .check-button:hover {
@@ -65,8 +66,23 @@ body {
 }
 
 .check-button:disabled {
-    background: #ccc; /* Gray background for disabled state */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     cursor: not-allowed;
+}
+
+.check-button.loading {
+    color: transparent; /* Hide text while loading */
+}
+
+.check-button.loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 3px solid #f3f3f3; /* Light gray */
+    border-top: 3px solid #3366BB; /* Blue */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 /* Loader */
