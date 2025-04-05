@@ -85,18 +85,30 @@ body {
     color: #3366BB;
 }
 .copy-subscribe-btn {
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 40px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: bold;
+    color: white;
+    background-color: #5588D1;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
 .copy-subscribe-btn:hover {
     opacity: 0.9;
 }
+
+.copy-subscribe-btn:disabled {
+    background-color: #a0c4f3;
+    cursor: not-allowed;
+}
+
 .copy-message {
     color: green;
     font-size: 14px;
@@ -122,10 +134,6 @@ body {
     height: 36px;
     animation: spin 1s linear infinite;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 
 /* Spinner inside the Redeem Now button */
 .spinner {
@@ -136,6 +144,11 @@ body {
     height: 16px;
     animation: spin 1s linear infinite;
     margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {
