@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exclusive Discount Pop-Up</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exclusive Discount Pop-Up</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="popup-container">
+  <div class="popup-container">
     <div class="popup-title" id="popupTitle">Unlock Your Exclusive Discount!</div>
     <p id="discountText">Save up to <span class="discount-text">45%</span> instantly on your subscription.</p>
     <input type="text" id="cardInput" class="input-field" maxlength="9" placeholder="Enter first 9 digits" oninput="this.value=this.value.replace(/[^0-9]/g,'');"> 
@@ -15,72 +15,72 @@
     <div class="loader" id="loader"></div>
     <div id="resultMessage" class="result-box"></div>
     <div class="coupon-box" id="couponBox">
-        <div class="coupon-code" id="couponCode">FIRST30</div>
-        <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Copy & Subscribe</button>
-        <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p>
+      <div class="coupon-code" id="couponCode">FIRST30</div>
+      <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Copy & Subscribe</button>
+      <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p>
     </div>
     <div class="no-thanks">No, Thanks</div>
-</div>
+  </div>
 
-<script>
-function isValidCardInput(cardNumber) {
-    if (!/^\d{9}$/.test(cardNumber)) return false;
+  <script>
+    function isValidCardInput(cardNumber) {
+      if (!/^\d{9}$/.test(cardNumber)) return false;
 
-    const firstTwo = parseInt(cardNumber.slice(0, 2), 10);
-    const firstFour = parseInt(cardNumber.slice(0, 4), 10);
-    const firstOne = parseInt(cardNumber.slice(0, 1), 10);
+      const firstTwo = parseInt(cardNumber.slice(0, 2), 10);
+      const firstFour = parseInt(cardNumber.slice(0, 4), 10);
+      const firstOne = parseInt(cardNumber.slice(0, 1), 10);
 
-    if (firstOne === 4) return true; // Visa
-    if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return true; // MasterCard
-    if ([34, 37].includes(firstTwo)) return true; // AmEx
-    if ([60, 65, 81].includes(firstTwo)) return true; // RuPay
+      if (firstOne === 4) return true; // Visa
+      if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return true; // MasterCard
+      if ([34, 37].includes(firstTwo)) return true; // AmEx
+      if ([60, 65, 81].includes(firstTwo)) return true; // RuPay
 
-    return false;
-}
+      return false;
+    }
 
-async function validateCard() {
-    const input = document.getElementById("cardInput").value.trim();
-    const result = document.getElementById("resultMessage");
-    const couponBox = document.getElementById("couponBox");
-    const couponCode = document.getElementById("couponCode");
-    const loader = document.getElementById("loader");
-    const inputField = document.getElementById("cardInput");
-    const checkButton = document.getElementById("checkButton");
-    const discountText = document.getElementById("discountText");
-    const popupTitle = document.getElementById("popupTitle");
+    async function validateCard() {
+      const input = document.getElementById("cardInput").value.trim();
+      const result = document.getElementById("resultMessage");
+      const couponBox = document.getElementById("couponBox");
+      const couponCode = document.getElementById("couponCode");
+      const loader = document.getElementById("loader");
+      const inputField = document.getElementById("cardInput");
+      const checkButton = document.getElementById("checkButton");
+      const discountText = document.getElementById("discountText");
+      const popupTitle = document.getElementById("popupTitle");
 
-    // Reset UI
-    result.innerHTML = "";
-    couponBox.style.display = "none";
-    result.style.color = "#D9534F";
+      // Reset UI
+      result.innerHTML = "";
+      couponBox.style.display = "none";
+      result.style.color = "#D9534F";
 
-    if (!/^\d{9}$/.test(input)) {
+      if (!/^\d{9}$/.test(input)) {
         result.innerHTML = "Please enter exactly 9 digits.";
         return;
-    }
+      }
 
-    if (!isValidCardInput(input)) {
+      if (!isValidCardInput(input)) {
         result.innerHTML = "This doesn’t look like a valid card. Try again.";
         return;
-    }
+      }
 
-    loader.style.display = "block";
+      loader.style.display = "block";
 
-    try {
-        const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/cardBinChecker?bin=${input}`);
+      try {
+        const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
         const data = await res.json();
         loader.style.display = "none";
 
         if (data.coupon === 1) {
-            result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
-            result.style.color = "#F39C12";
-            couponCode.innerText = "SAVE45";
+          result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
+          result.style.color = "#F39C12";
+          couponCode.innerText = "SAVE45";
         } else if (data.coupon === 2) {
-            result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
-            result.style.color = "#5588D1";
-            couponCode.innerText = "FIRST30";
+          result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+          result.style.color = "#5588D1";
+          couponCode.innerText = "FIRST30";
         } else {
-            result.innerHTML = "Something went wrong. Try again.";
+          result.innerHTML = "Something went wrong. Try again.";
         }
 
         popupTitle.innerText = "Congratulations!";
@@ -89,21 +89,21 @@ async function validateCard() {
         discountText.style.display = "none";
         couponBox.style.display = "flex";
 
-    } catch (error) {
+      } catch (error) {
         loader.style.display = "none";
         result.innerHTML = "🚫 Error connecting to server. Try again.";
+      }
     }
-}
 
-function copyAndRedirect() {
-    const code = document.getElementById("couponCode").innerText;
-    navigator.clipboard.writeText(code).then(() => {
+    function copyAndRedirect() {
+      const code = document.getElementById("couponCode").innerText;
+      navigator.clipboard.writeText(code).then(() => {
         document.getElementById("copyMessage").style.display = "block";
         setTimeout(() => {
-            window.location.href = "https://your-subscription-page.com"; // Change to your redirect URL
+          window.location.href = "https://your-subscription-page.com"; // 🔁 Change this to your redirect URL
         }, 1500);
-    });
-}
-</script>
+      });
+    }
+  </script>
 </body>
 </html>
