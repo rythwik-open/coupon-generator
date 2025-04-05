@@ -66,10 +66,10 @@
         return;
       }
 
+      loader.style.display = "block";
+
       if (cardType === "visa") {
         // Call the API only for Visa cards
-        loader.style.display = "block";
-
         try {
           const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
           const data = await res.json();
@@ -79,12 +79,9 @@
             result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
             result.style.color = "#F39C12";
             couponCode.innerText = "SAVE45";
-          } else if (data.coupon === 2) {
-            result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
-            result.style.color = "#5588D1";
-            couponCode.innerText = "FIRST30";
           } else {
             result.innerHTML = "Something went wrong. Try again.";
+            return;
           }
 
           popupTitle.innerText = "Congratulations!";
@@ -98,26 +95,19 @@
           result.innerHTML = "🚫 Error connecting to server. Try again.";
         }
       } else {
-        // Handle non-Visa cards without API call
-        if (cardType === "mastercard") {
-          result.innerHTML = "⚡ Use code <b>MC30</b> to get 30% off!";
+        // Handle non-Visa cards with a loading animation
+        setTimeout(() => {
+          loader.style.display = "none";
+          result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
           result.style.color = "#5588D1";
-          couponCode.innerText = "MC30";
-        } else if (cardType === "amex") {
-          result.innerHTML = "🎉 You qualify for <b>20% off</b>!";
-          result.style.color = "#F39C12";
-          couponCode.innerText = "AMEX20";
-        } else if (cardType === "rupay") {
-          result.innerHTML = "🎉 You qualify for <b>15% off</b>!";
-          result.style.color = "#F39C12";
-          couponCode.innerText = "RUPAY15";
-        }
+          couponCode.innerText = "FIRST30";
 
-        popupTitle.innerText = "Congratulations!";
-        inputField.style.display = "none";
-        checkButton.style.display = "none";
-        discountText.style.display = "none";
-        couponBox.style.display = "flex";
+          popupTitle.innerText = "Congratulations!";
+          inputField.style.display = "none";
+          checkButton.style.display = "none";
+          discountText.style.display = "none";
+          couponBox.style.display = "flex";
+        }, 2000); // Show loader for 2 seconds
       }
     }
 
