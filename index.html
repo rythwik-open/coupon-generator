@@ -54,44 +54,58 @@
       couponBox.style.display = "none";
       result.style.color = "#D9534F";
 
+      // Validate input length
       if (!/^\d{9}$/.test(input)) {
         result.innerHTML = "Please enter exactly 9 digits.";
         return;
       }
 
-      if (!isValidCardInput(input)) {
-        result.innerHTML = "This doesn’t look like a valid card. Try again.";
-        return;
-      }
+      // Check if the input starts with 4 (VISA card)
+      if (input.startsWith("4")) {
+        loader.style.display = "block";
 
-      loader.style.display = "block";
+        try {
+          // Call the API for VISA cards
+          const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
+          const data = await res.json();
+          loader.style.display = "none";
 
-      try {
-        const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
-        const data = await res.json();
-        loader.style.display = "none";
+          if (data.coupon === 1) {
+            result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
+            result.style.color = "#F39C12";
+            couponCode.innerText = "SAVE45";
+          } else {
+            result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+            result.style.color = "#5588D1";
+            couponCode.innerText = "FIRST30";
+          }
 
-        if (data.coupon === 1) {
-          result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
-          result.style.color = "#F39C12";
-          couponCode.innerText = "SAVE45";
-        } else if (data.coupon === 2) {
+          popupTitle.innerText = "Congratulations!";
+          inputField.style.display = "none";
+          checkButton.style.display = "none";
+          discountText.style.display = "none";
+          couponBox.style.display = "flex";
+
+        } catch (error) {
+          loader.style.display = "none";
+          result.innerHTML = "🚫 Error connecting to server. Try again.";
+        }
+      } else {
+        // For non-VISA cards, skip the API call
+        loader.style.display = "block";
+
+        setTimeout(() => {
+          loader.style.display = "none";
           result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
           result.style.color = "#5588D1";
           couponCode.innerText = "FIRST30";
-        } else {
-          result.innerHTML = "Something went wrong. Try again.";
-        }
 
-        popupTitle.innerText = "Congratulations!";
-        inputField.style.display = "none";
-        checkButton.style.display = "none";
-        discountText.style.display = "none";
-        couponBox.style.display = "flex";
-
-      } catch (error) {
-        loader.style.display = "none";
-        result.innerHTML = "🚫 Error connecting to server. Try again.";
+          popupTitle.innerText = "Congratulations!";
+          inputField.style.display = "none";
+          checkButton.style.display = "none";
+          discountText.style.display = "none";
+          couponBox.style.display = "flex";
+        }, 3000); // Show loading animation for 3 seconds
       }
     }
 
@@ -100,7 +114,7 @@
       navigator.clipboard.writeText(code).then(() => {
         document.getElementById("copyMessage").style.display = "block";
         setTimeout(() => {
-          window.location.href = "https://your-subscription-page.com"; // 🔁 Change this to your redirect URL
+          window.location.href = "https://getcaramel.ai"; // 🔁 Change this to your redirect URL
         }, 1500);
       });
     }
