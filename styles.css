@@ -1,224 +1,225 @@
-/* General Styles */
-body {
-    font-family: 'Inter', sans-serif;
+/* Reset some defaults */
+* {
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    background-color: rgba(0, 0, 0, 0.5);
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-}
-
-/* Popup Container */
-.popup-container {
-    width: 400px; /* Fixed width */
-    height: 500px; /* Fixed height */
-    background: rgba(255, 255, 255, 0.95); /* Slightly transparent white background */
-    border-radius: 16px;
-    text-align: center;
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    position: relative;
-    overflow: hidden; /* Prevent content overflow */
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-/* Popup Title */
-.popup-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #0061A5; /* Blue color */
-    margin-bottom: 10px;
-}
-
-/* Discount Text */
-.discount-text {
-    font-size: 20px;
-    font-weight: 700;
-    color: #0061A5;
-}
-
-/* Input Field */
-.input-field {
+  }
+  
+  /* Popup container */
+  .popup-container {
+    background: #fff;
+    padding: 30px 24px;
+    border-radius: 16px;
     width: 90%;
-    padding: 10px;
-    font-size: 16px;
+    max-width: 400px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    position: relative;
+    animation: popupFadeIn 0.4s ease;
+  }
+  
+  /* Title */
+  .popup-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  
+  /* Discount text */
+  #discountText {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .discount-text {
+    font-weight: 700;
+    color: #E67E22;
+  }
+  
+  /* Input field */
+  .input-field {
+    width: 100%;
+    padding: 12px 14px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    margin-bottom: 16px;
-}
-
-/* Buttons (Shared Styles) */
-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+  
+  /* Check button */
+  .check-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1ABC9C;
     color: white;
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    position: relative;
-}
-
-button:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-}
-
-button:disabled {
-    background: #ccc; /* Gray background for disabled state */
-    cursor: not-allowed;
-}
-
-/* Check Offer Button */
-.check-button {
-    width: fit-content;
-    padding: 10px 20px;
-    margin: 10px auto;
-}
-
-/* Redeem Now Button */
-.copy-subscribe-btn {
-    width: 150px;
-    height: 40px;
-    margin-top: 20px;
-}
-
-/* Loading Spinner for Buttons */
-button.loading {
-    color: transparent; /* Hide text while loading */
-}
-
-button.loading::after {
+    transition: background 0.3s ease;
+  }
+  
+  .check-button:hover {
+    background-color: #16A085;
+  }
+  
+  /* Loading spinner inside buttons */
+  .check-button.loading::after,
+  .copy-subscribe-btn.loading::after {
     content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-left: 8px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
     width: 16px;
     height: 16px;
-    border: 3px solid #f3f3f3; /* Light gray */
-    border-top: 3px solid #3366BB; /* Blue */
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Result Message */
-.result-box {
-    font-size: 14px;
-    color: #D9534F; /* Red for error messages */
+    display: inline-block;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+  }
+  
+  /* Result Message */
+  .result-box {
     margin-top: 10px;
-}
-
-/* Coupon Box */
-.coupon-box {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #D9534F; /* default red, override in JS */
+  }
+  
+  /* Coupon section */
+  .coupon-box {
     display: none;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-}
-
-/* Coupon Code Container */
-.coupon-code-container {
+    gap: 10px;
+  }
+  
+  .coupon-code-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .coupon-code-box {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px; /* Spacing between coupon code and button */
-}
-
-/* Coupon Code Box */
-.coupon-code-box {
-    font-size: 18px;
+    border: 2px dashed #3498DB;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background-color: #ecf5ff;
+  }
+  
+  .coupon-code {
+    font-size: 1.1rem;
     font-weight: bold;
-    color: #0061A5;
-    background: #f3f3f3;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-/* Copy Icon Button */
-.copy-icon-btn {
+    color: #3498DB;
+  }
+  
+  .copy-icon-btn {
     background: none;
     border: none;
+    margin-left: 10px;
+    font-size: 1.1rem;
     cursor: pointer;
-    font-size: 16px;
-    color: #5588D1;
-}
-
-.copy-icon-btn:hover {
-    color: #3366BB;
-}
-
-/* Copy Message */
-.copy-message {
-    color: green;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
-}
-
-/* No Thanks Link */
-.no-thanks {
-    font-size: 14px;
-    color: #0061A5;
-    margin-top: 20px;
+  }
+  
+  /* Redeem Button */
+  .copy-subscribe-btn {
+    padding: 12px 20px;
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
-}
-
-.no-thanks:hover {
-    text-decoration: underline;
-}
-
-/* Toast Notification */
-.toast {
+    transition: background 0.3s ease;
+  }
+  
+  .copy-subscribe-btn:hover {
+    background-color: #2980B9;
+  }
+  
+  /* Copy Message */
+  .copy-message {
+    font-size: 0.9rem;
+    color: #27AE60;
+  }
+  
+  /* Toast Notification */
+  .toast {
     position: fixed;
-    bottom: 20px; /* Position the toast 20px above the bottom of the screen */
-    left: 50%; /* Center the toast horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-    background-color: #333; /* Dark background for the toast */
-    color: #fff; /* White text */
-    padding: 10px 20px; /* Add padding for better appearance */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 14px; /* Font size for the text */
-    opacity: 0; /* Initially hidden */
-    visibility: hidden; /* Initially not visible */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-in and fade-out */
-    z-index: 1000; /* Ensure the toast appears above other elements */
-}
-
-.toast.show {
-    opacity: 1; /* Make the toast visible */
-    visibility: visible; /* Make the toast visible */
-}
-
-/* Media Query for Smaller Screens */
-@media (max-width: 768px) {
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2ECC71;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 999;
+  }
+  
+  .toast.show {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  
+  /* No Thanks */
+  .no-thanks {
+    margin-top: 20px;
+    color: #888;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  /* Animations */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes popupFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 480px) {
     .popup-container {
-        width: 90%;
-        height: auto; /* Allow height to adjust dynamically */
+      padding: 24px 16px;
     }
-
+  
     .popup-title {
-        font-size: 20px;
+      font-size: 1.25rem;
     }
-
-    .discount-text {
-        font-size: 18px;
+  
+    .coupon-code-box {
+      flex-direction: row;
+      font-size: 1rem;
     }
-}
+  }
+  
