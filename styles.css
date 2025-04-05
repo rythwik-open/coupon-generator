@@ -1,61 +1,60 @@
 /* General Styles */
-body {
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-}
-
-/* Popup Container */
-.popup-container {
-    width: 400px; /* Fixed width */
-    height: 500px; /* Fixed height */
-    background: rgba(255, 255, 255, 0.95); /* Slightly transparent white background */
+    background: rgba(0, 0, 0, 0.5); /* Optional background for popup overlay */
+  }
+  
+  /* Popup Container */
+  .popup-container {
+    width: 400px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
     text-align: center;
     padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    position: relative;
-    overflow: hidden; /* Prevent content overflow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-/* Popup Title */
-.popup-title {
+  }
+  
+  /* Popup Title */
+  .popup-title {
     font-size: 24px;
     font-weight: 600;
-    color: #0061A5; /* Blue color */
+    color: #0061A5;
     margin-bottom: 10px;
-}
-
-/* Discount Text */
-.discount-text {
+  }
+  
+  /* Discount Text */
+  .discount-text {
     font-size: 20px;
     font-weight: 700;
     color: #0061A5;
-}
-
-/* Input Field */
-.input-field {
+    margin-bottom: 16px;
+  }
+  
+  /* Input Field */
+  .input-field {
     width: 90%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-bottom: 16px;
-}
-
-/* Shared Button Styles */
-button {
-    display: inline-flex; /* Use flexbox for better alignment */
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
+  }
+  
+  /* Shared Button Styles */
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
     font-weight: bold;
     color: white;
@@ -64,73 +63,57 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.3s ease;
-    position: relative; /* Required for positioning the spinner */
-    padding: 10px 20px; /* Padding for button content */
-    overflow: hidden; /* Prevent spinner from overflowing */
-}
-
-button:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-}
-
-button:disabled {
-    background: #ccc; /* Gray background for disabled state */
+    position: relative;
+    padding: 10px 20px;
+    overflow: hidden;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
+  button:disabled {
+    background: #ccc;
     cursor: not-allowed;
-}
-
-/* Loading Spinner for Buttons */
-button.loading {
-    color: transparent; /* Hide text while loading */
-}
-
-button.loading::after {
+  }
+  
+  /* Loading Spinner for Buttons */
+  button.loading {
+    color: transparent;
+  }
+  
+  button.loading::after {
     content: "";
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for exact centering */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
     width: 16px;
     height: 16px;
-    border: 3px solid #f3f3f3; /* Light gray */
-    border-top: 3px solid #3366BB; /* Blue */
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3366BB;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
+  }
+  
+  @keyframes spin {
     0% {
-        transform: rotate(0deg);
+      transform: translate(-50%, -50%) rotate(0deg);
     }
     100% {
-        transform: rotate(360deg);
+      transform: translate(-50%, -50%) rotate(360deg);
     }
-}
-
-/* Result Message */
-.result-box {
-    font-size: 14px;
-    color: #D9534F; /* Red for error messages */
-    margin-top: 10px;
-}
-
-/* Coupon Box */
-.coupon-box {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-/* Coupon Code Container */
-.coupon-code-container {
+  }
+  
+  /* Coupon Code Container */
+  .coupon-code-container {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 16px; /* Spacing between coupon code and button */
-}
-
-/* Coupon Code Box */
-.coupon-code-box {
+    margin-bottom: 16px;
+  }
+  
+  .coupon-code-box {
     font-size: 18px;
     font-weight: bold;
     color: #0061A5;
@@ -138,75 +121,66 @@ button.loading::after {
     padding: 5px 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-}
-
-/* Copy Icon Button */
-.copy-icon-btn {
+  }
+  
+  .copy-icon-btn {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 16px;
     color: #5588D1;
-}
-
-.copy-icon-btn:hover {
+  }
+  
+  .copy-icon-btn:hover {
     color: #3366BB;
-}
-
-/* Copy Message */
-.copy-message {
-    color: green;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
-}
-
-/* No Thanks Link */
-.no-thanks {
+  }
+  
+  .no-thanks {
     font-size: 14px;
     color: #0061A5;
     margin-top: 20px;
     cursor: pointer;
-}
-
-.no-thanks:hover {
+  }
+  
+  .no-thanks:hover {
     text-decoration: underline;
-}
-
-/* Toast Notification */
-.toast {
+  }
+  
+  /* Toast Notification */
+  .toast {
     position: fixed;
-    bottom: 20px; /* Position the toast 20px above the bottom of the screen */
-    left: 50%; /* Center the toast horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-    background-color: #333; /* Dark background for the toast */
-    color: #fff; /* White text */
-    padding: 10px 20px; /* Add padding for better appearance */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 14px; /* Font size for the text */
-    opacity: 0; /* Initially hidden */
-    visibility: hidden; /* Initially not visible */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-in and fade-out */
-    z-index: 1000; /* Ensure the toast appears above other elements */
-}
-
-.toast.show {
-    opacity: 1; /* Make the toast visible */
-    visibility: visible; /* Make the toast visible */
-}
-
-/* Media Query for Smaller Screens */
-@media (max-width: 768px) {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .toast.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .popup-container {
-        width: 90%;
-        height: auto; /* Allow height to adjust dynamically */
+      width: 90%;
+      height: auto;
     }
-
+  
     .popup-title {
-        font-size: 20px;
+      font-size: 20px;
     }
-
+  
     .discount-text {
-        font-size: 18px;
+      font-size: 18px;
     }
-}
+  }
+  
