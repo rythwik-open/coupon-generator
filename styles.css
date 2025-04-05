@@ -93,12 +93,22 @@ body {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #5588D1;
+    background: linear-gradient(90deg, #5588D1, #3366BB); /* Gradient background */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     position: relative;
+    margin-top: 16px; /* Add spacing between the coupon code box and the button */
+}
+
+.copy-subscribe-btn:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.copy-subscribe-btn:disabled {
+    background: linear-gradient(90deg, #a0c4f3, #7faee6); /* Lighter gradient for disabled state */
+    cursor: not-allowed;
 }
 
 .copy-subscribe-btn.loading {
@@ -111,18 +121,9 @@ body {
     width: 16px;
     height: 16px;
     border: 3px solid #f3f3f3; /* Light gray */
-    border-top: 3px solid #5588D1; /* Blue */
+    border-top: 3px solid #3366BB; /* Blue */
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
-
-.copy-subscribe-btn:hover {
-    opacity: 0.9;
-}
-
-.copy-subscribe-btn:disabled {
-    background-color: #a0c4f3; /* Lighter blue for disabled state */
-    cursor: not-allowed;
 }
 
 .copy-message {
