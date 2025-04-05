@@ -34,98 +34,63 @@
       if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return true; // MasterCard
       if ([34, 37].includes(firstTwo)) return true; // AmEx
       if ([60, 65, 81].includes(firstTwo)) return true; // RuPay
-
       return false;
     }
 
-    async function validateCard() {
-      const input = document.getElementById("cardInput").value.trim();
-      const result = document.getElementById("resultMessage");
-      const couponBox = document.getElementById("couponBox");
-      const couponCode = document.getElementById("couponCode");
+    function validateCard() {
+      const cardInput = document.getElementById("cardInput").value;
       const loader = document.getElementById("loader");
+      const result = document.getElementById("resultMessage");
+      const couponCode = document.getElementById("couponCode");
+      const popupTitle = document.getElementById("popupTitle");
       const inputField = document.getElementById("cardInput");
       const checkButton = document.getElementById("checkButton");
       const discountText = document.getElementById("discountText");
-      const popupTitle = document.getElementById("popupTitle");
+      const couponBox = document.getElementById("couponBox");
 
-      // Reset UI
-      result.innerHTML = "";
-      couponBox.style.display = "none";
-      result.style.color = "#D9534F";
-
-      // Validate input length
-      if (!/^\d{9}$/.test(input)) {
-        result.innerHTML = "Please enter exactly 9 digits.";
+      if (!isValidCardInput(cardInput)) {
+        result.innerHTML = "❌ Invalid card number. Please try again.";
+        result.style.color = "red";
         return;
       }
 
-      // Check if the input starts with 4 (VISA card)
-      if (input.startsWith("4")) {
-        loader.style.display = "block";
+      loader.style.display = "block";
+      result.innerHTML = "";
 
-        try {
-          // Call the API for VISA cards
-          const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
-          const data = await res.json();
-          loader.style.display = "none";
+      setTimeout(() => {
+        loader.style.display = "none";
+        result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+        result.style.color = "#5588D1";
+        couponCode.innerText = "FIRST30";
 
-          if (data.coupon === 1) {
-            result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
-            result.style.color = "#F39C12";
-            couponCode.innerText = "SAVE45";
-          } else {
-            result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
-            result.style.color = "#5588D1";
-            couponCode.innerText = "FIRST30";
-          }
-
-          popupTitle.innerText = "Congratulations!";
-          inputField.style.display = "none";
-          checkButton.style.display = "none";
-          discountText.style.display = "none";
-          couponBox.style.display = "flex";
-
-        } catch (error) {
-          loader.style.display = "none";
-          result.innerHTML = "🚫 Error connecting to server. Try again.";
-        }
-      } else {
-        // For non-VISA cards, skip the API call
-        loader.style.display = "block";
-
-        setTimeout(() => {
-          loader.style.display = "none";
-          result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
-          result.style.color = "#5588D1";
-          couponCode.innerText = "FIRST30";
-
-          popupTitle.innerText = "Congratulations!";
-          inputField.style.display = "none";
-          checkButton.style.display = "none";
-          discountText.style.display = "none";
-          couponBox.style.display = "flex";
-        }, 3000); // Show loading animation for 3 seconds
-      }
+        popupTitle.innerText = "Congratulations!";
+        inputField.style.display = "none";
+        checkButton.style.display = "none";
+        discountText.style.display = "none";
+        couponBox.style.display = "flex";
+      }, 3000); // Show loading animation for 3 seconds
     }
 
     function copyAndRedirect() {
-  const couponCode = document.getElementById("couponCode").textContent;
+      const couponCode = document.getElementById("couponCode").textContent;
 
-  // Copy the coupon code to the clipboard
-  navigator.clipboard.writeText(couponCode).then(() => {
-    // Show the "Copied to clipboard" message
-    const copyMessage = document.getElementById("copyMessage");
-    copyMessage.style.display = "block";
+      // Copy the coupon code to the clipboard
+      navigator.clipboard.writeText(couponCode).then(() => {
+        // Show the "Copied to clipboard" message
+        const copyMessage = document.getElementById("copyMessage");
+        copyMessage.style.display = "block";
 
-    // Redirect to a specific URL after a short delay
-    setTimeout(() => {
-      window.location.href = "https://www.getcaramel.ai"; // Replace with your actual URL
-    }, 1000);
-  }).catch(err => {
-    console.error("Failed to copy coupon code: ", err);
-  });
-}
+        // Redirect to a specific URL after a short delay
+        setTimeout(() => {
+          window.location.href = "https://www.getcaramel.ai"; // Replace with your actual URL
+        }, 1000);
+      }).catch(err => {
+        console.error("Failed to copy coupon code: ", err);
+
+        // Fallback: Redirect even if copying fails
+        window.location.href = "https://www.getcaramel.ai";
+      });
+    }
   </script>
 </body>
 </html>
