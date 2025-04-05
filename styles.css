@@ -8,7 +8,7 @@
   
   /* Body styling */
   body {
-    background-color: #09090B; /* Mostly Black */
+    background-color: #FFFFFF; /* White background */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,29 +17,34 @@
   
   /* Popup container */
   .popup-container {
-    background-color: #3F3F46; /* Dark Gray 1 */
-    padding: 30px;
+    background-color: #FFFFFF; /* White pop-up container */
+    padding: 20px; /* Reduced padding to make it less tall */
     border-radius: 12px;
     width: 100%;
     max-width: 400px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    color: #A1A1AA; /* Dark Gray 2 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+    color: #09090B; /* Mostly Black for primary text */
+    height: 300px; /* Fixed height to prevent shifting */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space evenly */
   }
   
   /* Popup title */
   .popup-title {
-    font-size: 24px;
+    font-size: 22px; /* Slightly smaller for better proportion */
     font-weight: bold;
     color: #0061A5; /* Dark Blue */
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Reduced margin */
   }
   
   /* Discount text */
   #discountText {
-    font-size: 16px;
-    margin-bottom: 20px;
+    font-size: 14px; /* Smaller font to reduce space */
+    margin-bottom: 15px; /* Reduced margin */
     transition: opacity 0.3s ease;
+    color: #A1A1AA; /* Dark Gray 2 for secondary text */
   }
   
   .discount-text {
@@ -50,13 +55,13 @@
   /* Input field */
   .input-field {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
+    padding: 10px; /* Reduced padding */
+    margin-bottom: 15px; /* Reduced margin */
     border: 1px solid #A1A1AA; /* Dark Gray 2 */
     border-radius: 8px;
-    font-size: 16px;
-    background-color: #09090B; /* Mostly Black */
-    color: #A1A1AA; /* Dark Gray 2 */
+    font-size: 14px; /* Smaller font */
+    background-color: #F9F9F9; /* Light gray background for contrast */
+    color: #09090B; /* Mostly Black */
     transition: opacity 0.3s ease;
   }
   
@@ -67,23 +72,25 @@
   /* Buttons with gradient */
   .check-button,
   .copy-subscribe-btn {
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Correct gradient */
     color: #FFFFFF;
-    padding: 12px 24px;
+    padding: 10px 20px; /* Reduced padding */
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px; /* Smaller font */
     cursor: pointer;
     transition: opacity 0.3s ease, transform 0.2s ease;
   }
   
   .check-button:hover,
   .copy-subscribe-btn:hover {
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Maintain gradient on hover */
     transform: scale(1.05);
   }
   
   .check-button:disabled,
   .copy-subscribe-btn:disabled {
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Maintain gradient when disabled */
     opacity: 0.6;
     cursor: not-allowed;
   }
@@ -99,22 +106,26 @@
   .copy-subscribe-btn.loading::after {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 16px; /* Smaller spinner */
+    height: 16px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 3px solid #FFFFFF;
-    border-top: 3px solid transparent;
+    border: 2px solid #FFFFFF;
+    border-top: 2px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
   
   /* Result message */
   .result-box {
-    margin: 20px 0;
-    font-size: 16px;
-    min-height: 24px; /* Prevents layout shift */
+    margin: 10px 0; /* Reduced margin */
+    font-size: 14px; /* Smaller font */
+    min-height: 20px; /* Prevents layout shift */
+    flex-grow: 1; /* Allows it to take available space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   /* Coupon box */
@@ -125,21 +136,21 @@
   }
   
   .coupon-code-container {
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Reduced margin */
   }
   
   .coupon-code-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #09090B; /* Mostly Black */
-    padding: 10px 15px;
+    background-color: #F9F9F9; /* Light gray background */
+    padding: 8px 12px; /* Reduced padding */
     border-radius: 8px;
     border: 1px dashed #A1A1AA; /* Dark Gray 2 */
   }
   
   .coupon-code {
-    font-size: 18px;
+    font-size: 16px; /* Smaller font */
     font-weight: bold;
     color: #5588D1; /* Gradient start color */
   }
@@ -147,8 +158,8 @@
   .copy-icon-btn {
     background: none;
     border: none;
-    font-size: 20px;
-    margin-left: 10px;
+    font-size: 18px; /* Smaller icon */
+    margin-left: 8px;
     cursor: pointer;
     color: #A1A1AA; /* Dark Gray 2 */
     transition: color 0.2s ease;
@@ -160,8 +171,8 @@
   
   /* No thanks link */
   .no-thanks {
-    margin-top: 20px;
-    font-size: 14px;
+    margin-top: 10px; /* Reduced margin */
+    font-size: 12px; /* Smaller font */
     color: #A1A1AA; /* Dark Gray 2 */
     text-decoration: underline;
     cursor: pointer;
@@ -180,9 +191,9 @@
     transform: translateX(-50%);
     background-color: #0061A5; /* Dark Blue */
     color: #FFFFFF;
-    padding: 10px 20px;
+    padding: 8px 16px; /* Reduced padding */
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 12px; /* Smaller font */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
@@ -202,8 +213,9 @@
   /* Responsive design */
   @media (max-width: 480px) {
     .popup-container {
-      padding: 20px;
+      padding: 15px; /* Reduced padding for smaller screens */
       max-width: 90%;
+      height: 280px; /* Slightly smaller height */
     }
   
     .popup-title {
@@ -213,6 +225,6 @@
     .input-field,
     .check-button,
     .copy-subscribe-btn {
-      font-size: 14px;
+      font-size: 13px;
     }
   }
