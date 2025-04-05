@@ -30,10 +30,10 @@
       const firstFour = parseInt(cardNumber.slice(0, 4), 10);
       const firstOne = parseInt(cardNumber.slice(0, 1), 10);
 
-      if (firstOne === 4) return true; // Visa
-      if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return true; // MasterCard
-      if ([34, 37].includes(firstTwo)) return true; // AmEx
-      if ([60, 65, 81].includes(firstTwo)) return true; // RuPay
+      if (firstOne === 4) return "visa"; // Visa
+      if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return "mastercard"; // MasterCard
+      if ([34, 37].includes(firstTwo)) return "amex"; // AmEx
+      if ([60, 65, 81].includes(firstTwo)) return "rupay"; // RuPay
 
       return false;
     }
@@ -59,28 +59,58 @@
         return;
       }
 
-      if (!isValidCardInput(input)) {
+      const cardType = isValidCardInput(input);
+
+      if (!cardType) {
         result.innerHTML = "This doesn’t look like a valid card. Try again.";
         return;
       }
 
-      loader.style.display = "block";
+      if (cardType === "visa") {
+        // Call the API only for Visa cards
+        loader.style.display = "block";
 
-      try {
-        const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
-        const data = await res.json();
-        loader.style.display = "none";
+        try {
+          const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
+          const data = await res.json();
+          loader.style.display = "none";
 
-        if (data.coupon === 1) {
-          result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
-          result.style.color = "#F39C12";
-          couponCode.innerText = "SAVE45";
-        } else if (data.coupon === 2) {
-          result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+          if (data.coupon === 1) {
+            result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
+            result.style.color = "#F39C12";
+            couponCode.innerText = "SAVE45";
+          } else if (data.coupon === 2) {
+            result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+            result.style.color = "#5588D1";
+            couponCode.innerText = "FIRST30";
+          } else {
+            result.innerHTML = "Something went wrong. Try again.";
+          }
+
+          popupTitle.innerText = "Congratulations!";
+          inputField.style.display = "none";
+          checkButton.style.display = "none";
+          discountText.style.display = "none";
+          couponBox.style.display = "flex";
+
+        } catch (error) {
+          loader.style.display = "none";
+          result.innerHTML = "🚫 Error connecting to server. Try again.";
+        }
+      } else {
+        // Handle non-Visa cards without API call
+        if (cardType === "mastercard") {
+          result.innerHTML = "⚡ Use code <b>MC30</b> to get 30% off!";
           result.style.color = "#5588D1";
-          couponCode.innerText = "FIRST30";
-        } else {
-          result.innerHTML = "Something went wrong. Try again.";
+          couponCode.innerText = "MC30";
+        } else if (cardType === "amex") {
+          result.innerHTML = "🎉 You qualify for <b>20% off</b>!";
+          result.style.color = "#F39C12";
+          couponCode.innerText = "AMEX20";
+        } else if (cardType === "rupay") {
+          result.innerHTML = "🎉 You qualify for <b>15% off</b>!";
+          result.style.color = "#F39C12";
+          couponCode.innerText = "RUPAY15";
         }
 
         popupTitle.innerText = "Congratulations!";
@@ -88,10 +118,6 @@
         checkButton.style.display = "none";
         discountText.style.display = "none";
         couponBox.style.display = "flex";
-
-      } catch (error) {
-        loader.style.display = "none";
-        result.innerHTML = "🚫 Error connecting to server. Try again.";
       }
     }
 
