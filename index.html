@@ -138,8 +138,8 @@
       const code = document.getElementById("couponCode").innerText;
       const redeemButton = document.querySelector(".copy-subscribe-btn");
 
-      // Change button text to "Loading..." and disable the button
-      redeemButton.innerText = "Loading...";
+      // Add loading spinner and remove button text
+      redeemButton.innerHTML = '<div class="spinner"></div>';
       redeemButton.disabled = true;
 
       navigator.clipboard.writeText(code).then(() => {
@@ -152,7 +152,7 @@
       }).catch(err => {
         console.error("Failed to copy coupon code: ", err);
         // Revert button state if an error occurs
-        redeemButton.innerText = "Redeem Now";
+        redeemButton.innerHTML = "Redeem Now";
         redeemButton.disabled = false;
       });
     }

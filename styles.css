@@ -126,6 +126,18 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Spinner inside the Redeem Now button */
+.spinner {
+    border: 3px solid #f3f3f3; /* Light gray */
+    border-top: 3px solid #5588D1; /* Blue */
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
 @media (max-width: 768px) {
     .popup-container {
         width: 80%;
