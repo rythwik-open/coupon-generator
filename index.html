@@ -138,8 +138,8 @@
       const code = document.getElementById("couponCode").innerText;
       const redeemButton = document.querySelector(".copy-subscribe-btn");
 
-      // Add loading spinner and remove button text
-      redeemButton.innerHTML = '<div class="spinner"></div>';
+      // Add loading spinner and maintain button size
+      redeemButton.classList.add("loading");
       redeemButton.disabled = true;
 
       navigator.clipboard.writeText(code).then(() => {
@@ -147,12 +147,12 @@
 
         // Wait for 3 seconds before redirecting
         setTimeout(() => {
-          window.location.href = "https://getcaramel.ai";
+          window.location.href = "https://getcaramel.ai"; // 🔁 Change this to your redirect URL
         }, 3000);
       }).catch(err => {
         console.error("Failed to copy coupon code: ", err);
         // Revert button state if an error occurs
-        redeemButton.innerHTML = "Redeem Now";
+        redeemButton.classList.remove("loading");
         redeemButton.disabled = false;
       });
     }

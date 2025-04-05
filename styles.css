@@ -88,8 +88,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 150px;
-    height: 40px;
+    width: 150px; /* Set a fixed width for consistency */
+    height: 40px; /* Set a fixed height for consistency */
     font-size: 16px;
     font-weight: bold;
     color: white;
@@ -98,6 +98,22 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.copy-subscribe-btn.loading {
+    color: transparent; /* Hide text while loading */
+}
+
+.copy-subscribe-btn.loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 3px solid #f3f3f3; /* Light gray */
+    border-top: 3px solid #5588D1; /* Blue */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 .copy-subscribe-btn:hover {
@@ -105,7 +121,7 @@ body {
 }
 
 .copy-subscribe-btn:disabled {
-    background-color: #a0c4f3;
+    background-color: #a0c4f3; /* Lighter blue for disabled state */
     cursor: not-allowed;
 }
 
