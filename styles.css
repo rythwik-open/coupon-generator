@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -5,29 +6,37 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
+
+/* Popup Container */
 .popup-container {
     width: 60%;
     max-width: 400px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.95); /* Slightly transparent white background */
     border-radius: 16px;
     text-align: center;
     padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
     position: relative;
 }
+
+/* Popup Title */
 .popup-title {
     font-size: 35px;
     font-weight: 600;
-    color: #0061A5;
+    color: #0061A5; /* Blue color */
     margin-bottom: 10px;
 }
+
+/* Discount Text */
 .discount-text {
     font-size: 25px;
     font-weight: 700;
     color: #0061A5;
 }
+
+/* Input Field */
 .input-field {
     width: 90%;
     padding: 10px;
@@ -35,45 +44,87 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-bottom: 16px;
-    text-align: center;
 }
+
+/* Claim Offer Button */
 .check-button {
-    width: 30%;
-    padding: 12px;
+    width: 100%;
+    padding: 10px;
     font-size: 16px;
-    font-weight: 600;
-    color: #fff;
+    font-weight: bold;
+    color: white;
     background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: opacity 0.2s ease-in-out;
-    margin-bottom: 6px; /* Added spacing below button */
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
+
 .check-button:hover {
-    opacity: 0.9;
+    transform: scale(1.05); /* Slight zoom effect */
 }
+
+.check-button:disabled {
+    background: #ccc; /* Gray background for disabled state */
+    cursor: not-allowed;
+}
+
+/* Loader */
+.loader {
+    display: none;
+    margin: 10px auto;
+    border: 4px solid #f3f3f3; /* Light gray */
+    border-top: 4px solid #0061A5; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Result Message */
+.result-box {
+    font-size: 14px;
+    color: #D9534F; /* Red for error messages */
+    margin-top: 10px;
+}
+
+/* Coupon Box */
 .coupon-box {
     display: none;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
 }
-.coupon-code-box {
+
+/* Coupon Code Container */
+.coupon-code-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 5px 10px;
-    width: fit-content;
+    gap: 10px;
+    margin-bottom: 16px; /* Spacing between coupon code and button */
 }
-.coupon-code {
-    font-size: 16px;
+
+/* Coupon Code Box */
+.coupon-code-box {
+    font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: #0061A5;
+    background: #f3f3f3;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
+
+/* Copy Icon Button */
 .copy-icon-btn {
     background: none;
     border: none;
@@ -81,39 +132,40 @@ body {
     font-size: 16px;
     color: #5588D1;
 }
+
 .copy-icon-btn:hover {
     color: #3366BB;
 }
+
+/* Redeem Now Button */
 .copy-subscribe-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 150px; /* Set a fixed width for consistency */
-    height: 40px; /* Set a fixed height for consistency */
+    width: 150px; /* Fixed width */
+    height: 40px; /* Fixed height */
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Gradient background */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease;
     position: relative;
-    margin-top: 16px; /* Add spacing between the coupon code box and the button */
 }
 
 .copy-subscribe-btn:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.05); /* Slight zoom effect */
 }
 
 .copy-subscribe-btn:disabled {
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Lighter gradient for disabled state */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     cursor: not-allowed;
 }
 
 .copy-subscribe-btn.loading {
     color: transparent; /* Hide text while loading */
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Keep the same gradient background */
 }
 
 .copy-subscribe-btn.loading::after {
@@ -127,81 +179,24 @@ body {
     animation: spin 1s linear infinite;
 }
 
+/* Copy Message */
 .copy-message {
     color: green;
     font-size: 14px;
     margin-top: 5px;
     display: none;
 }
+
+/* No Thanks Link */
 .no-thanks {
     font-size: 14px;
-    color: #666;
-    margin-top: 10px;
+    color: #0061A5;
+    margin-top: 20px;
     cursor: pointer;
 }
+
 .no-thanks:hover {
     text-decoration: underline;
-}
-.loader {
-    display: none;
-    margin: 20px auto;
-    border: 4px solid #F3F3F3;
-    border-top: 4px solid #5588D1;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    animation: spin 1s linear infinite;
-}
-
-/* Spinner inside the Redeem Now button */
-.spinner {
-    border: 3px solid #f3f3f3; /* Light gray */
-    border-top: 3px solid #5588D1; /* Blue */
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@media (max-width: 768px) {
-    .popup-container {
-        width: 80%;
-    }
-}
-
-/* New styles for error message */
-#resultMessage {
-    font-size: 14px;
-    color: #D9534F;
-    margin-top: 10px;
-}
-
-.coupon-code-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px; /* Add spacing below the coupon code box */
-}
-
-.copy-icon {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.copy-icon:hover {
-    opacity: 0.8;
-}
-
-.button-container {
-    margin-top: 10px; /* Add spacing between the coupon code and the button */
 }
 
 /* Toast Notification */
@@ -224,4 +219,11 @@ body {
 .toast.show {
     opacity: 1; /* Make the toast visible */
     visibility: visible; /* Make the toast visible */
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+    .popup-container {
+        width: 80%;
+    }
 }
