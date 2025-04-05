@@ -1,227 +1,218 @@
-/* Reset some defaults */
+/* Reset default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: Arial, sans-serif;
   }
   
+  /* Body styling */
   body {
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 100vh;
+    background-color: #09090B; /* Mostly Black */
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
   }
   
   /* Popup container */
   .popup-container {
-    height: 450px; /* Adjust if needed */
-    min-width: 350px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    background-color: #3F3F46; /* Dark Gray 1 */
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    color: #A1A1AA; /* Dark Gray 2 */
   }
   
-  /* Title */
+  /* Popup title */
   .popup-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0061A5; /* Dark Blue */
+    margin-bottom: 15px;
   }
   
   /* Discount text */
   #discountText {
-    font-size: 1rem;
-    color: #666;
+    font-size: 16px;
     margin-bottom: 20px;
+    transition: opacity 0.3s ease;
   }
   
   .discount-text {
-    font-weight: 700;
-    color: #E67E22;
+    font-weight: bold;
+    color: #5588D1; /* Gradient start color for emphasis */
   }
   
   /* Input field */
   .input-field {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #A1A1AA; /* Dark Gray 2 */
     border-radius: 8px;
-    font-size: 1rem;
-    margin-bottom: 14px;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-size: 16px;
+    background-color: #09090B; /* Mostly Black */
+    color: #A1A1AA; /* Dark Gray 2 */
+    transition: opacity 0.3s ease;
   }
   
-  /* Check button */
-  .check-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #1ABC9C;
-    color: white;
+  .input-field::placeholder {
+    color: #A1A1AA; /* Dark Gray 2 */
+  }
+  
+  /* Buttons with gradient */
+  .check-button,
+  .copy-subscribe-btn {
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
+    color: #FFFFFF;
+    padding: 12px 24px;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.2s ease;
   }
   
-  .check-button:hover {
-    background-color: #16A085;
+  .check-button:hover,
+  .copy-subscribe-btn:hover {
+    transform: scale(1.05);
   }
   
-  /* Loading spinner inside buttons */
+  .check-button:disabled,
+  .copy-subscribe-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Loading state for buttons */
+  .check-button.loading,
+  .copy-subscribe-btn.loading {
+    position: relative;
+    color: transparent;
+  }
+  
   .check-button.loading::after,
   .copy-subscribe-btn.loading::after {
     content: "";
-    margin-left: 8px;
-    border: 2px solid #fff;
-    border-top: 2px solid transparent;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #FFFFFF;
+    border-top: 3px solid transparent;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    animation: spin 0.6s linear infinite;
-    vertical-align: middle;
+    animation: spin 1s linear infinite;
   }
   
-  /* Result Message */
+  /* Result message */
   .result-box {
-    margin-top: 10px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #D9534F; /* default red, override in JS */
+    margin: 20px 0;
+    font-size: 16px;
+    min-height: 24px; /* Prevents layout shift */
   }
   
-  /* Coupon section */
-  #couponBox {
+  /* Coupon box */
+  .coupon-box {
     visibility: hidden;
     opacity: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease;
   }
   
   .coupon-code-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-bottom: 20px;
   }
   
   .coupon-code-box {
     display: flex;
     align-items: center;
-    border: 2px dashed #3498DB;
-    padding: 10px 14px;
+    justify-content: center;
+    background-color: #09090B; /* Mostly Black */
+    padding: 10px 15px;
     border-radius: 8px;
-    background-color: #ecf5ff;
+    border: 1px dashed #A1A1AA; /* Dark Gray 2 */
   }
   
   .coupon-code {
-    font-size: 1.1rem;
+    font-size: 18px;
     font-weight: bold;
-    color: #3498DB;
+    color: #5588D1; /* Gradient start color */
   }
   
   .copy-icon-btn {
     background: none;
     border: none;
+    font-size: 20px;
     margin-left: 10px;
-    font-size: 1.1rem;
     cursor: pointer;
+    color: #A1A1AA; /* Dark Gray 2 */
+    transition: color 0.2s ease;
   }
   
-  /* Redeem Button */
-  .copy-subscribe-btn {
-    padding: 12px 20px;
-    background-color: #3498DB;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+  .copy-icon-btn:hover {
+    color: #0061A5; /* Dark Blue */
+  }
+  
+  /* No thanks link */
+  .no-thanks {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #A1A1AA; /* Dark Gray 2 */
+    text-decoration: underline;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: color 0.2s ease;
   }
   
-  .copy-subscribe-btn:hover {
-    background-color: #2980B9;
+  .no-thanks:hover {
+    color: #0061A5; /* Dark Blue */
   }
   
-  /* Copy Message */
-  .copy-message {
-    font-size: 0.9rem;
-    color: #27AE60;
-  }
-  
-  /* Toast Notification */
+  /* Toast notification */
   .toast {
-    opacity: 0;
-    visibility: hidden;
     position: fixed;
-    bottom: 30px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #2ECC71;
-    color: white;
-    padding: 12px 20px;
+    background-color: #0061A5; /* Dark Blue */
+    color: #FFFFFF;
+    padding: 10px 20px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 999;
+    font-size: 14px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
   }
   
   .toast.show {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(-10px);
   }
   
-  /* No Thanks */
-  .no-thanks {
-    margin-top: 20px;
-    color: #888;
-    font-size: 0.9rem;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  /* Animations */
+  /* Spinner animation */
   @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
   }
   
-  @keyframes popupFadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  /* Responsive */
+  /* Responsive design */
   @media (max-width: 480px) {
     .popup-container {
-      padding: 24px 16px;
+      padding: 20px;
+      max-width: 90%;
     }
   
     .popup-title {
-      font-size: 1.25rem;
+      font-size: 20px;
     }
   
-    .coupon-code-box {
-      flex-direction: row;
-      font-size: 1rem;
+    .input-field,
+    .check-button,
+    .copy-subscribe-btn {
+      font-size: 14px;
     }
   }
-  
