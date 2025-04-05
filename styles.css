@@ -139,3 +139,15 @@ body {
 .copy-icon:hover {
     opacity: 0.8;
 }
+
+.copy-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #5588D1;
+}
+
+.copy-icon-btn:hover {
+    color: #3366BB;
+}

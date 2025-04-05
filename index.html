@@ -15,7 +15,12 @@
     <div class="loader" id="loader"></div>
     <div id="resultMessage" class="result-box"></div>
     <div class="coupon-box" id="couponBox">
-      <div class="coupon-code" id="couponCode">FIRST30</div>
+      <div class="coupon-code-container">
+        <div class="coupon-code" id="couponCode">FIRST30</div>
+        <button class="copy-icon-btn" onclick="copyCouponCode()" title="Copy to clipboard">
+          📋
+        </button>
+      </div>
       <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
       <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p>
     </div>
@@ -109,6 +114,15 @@
           couponBox.style.display = "flex";
         }, 2000); // Show loader for 2 seconds
       }
+    }
+
+    function copyCouponCode() {
+      const code = document.getElementById("couponCode").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Coupon code copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy coupon code: ", err);
+      });
     }
 
     function copyAndRedirect() {
