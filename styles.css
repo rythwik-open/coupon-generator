@@ -107,7 +107,7 @@ body {
 }
 
 .copy-subscribe-btn:disabled {
-    background: linear-gradient(90deg, #a0c4f3, #7faee6); /* Lighter gradient for disabled state */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Lighter gradient for disabled state */
     cursor: not-allowed;
 }
 
