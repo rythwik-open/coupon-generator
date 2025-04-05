@@ -11,14 +11,15 @@ body {
 
 /* Popup Container */
 .popup-container {
-    width: 60%;
-    max-width: 400px;
+    width: 400px; /* Fixed width */
+    height: 500px; /* Fixed height */
     background: rgba(255, 255, 255, 0.95); /* Slightly transparent white background */
     border-radius: 16px;
     text-align: center;
     padding: 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
     position: relative;
+    overflow: hidden; /* Prevent content overflow */
 }
 
 /* Popup Title */
