@@ -16,7 +16,7 @@
     <div id="resultMessage" class="result-box"></div>
     <div class="coupon-box" id="couponBox">
       <div class="coupon-code" id="couponCode">FIRST30</div>
-      <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
+      <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Copy & Subscribe</button>
       <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p>
     </div>
     <div class="no-thanks">No, Thanks</div>
@@ -34,61 +34,74 @@
       if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return true; // MasterCard
       if ([34, 37].includes(firstTwo)) return true; // AmEx
       if ([60, 65, 81].includes(firstTwo)) return true; // RuPay
+
       return false;
     }
 
-    function validateCard() {
-      const cardInput = document.getElementById("cardInput").value;
-      const loader = document.getElementById("loader");
+    async function validateCard() {
+      const input = document.getElementById("cardInput").value.trim();
       const result = document.getElementById("resultMessage");
+      const couponBox = document.getElementById("couponBox");
       const couponCode = document.getElementById("couponCode");
-      const popupTitle = document.getElementById("popupTitle");
+      const loader = document.getElementById("loader");
       const inputField = document.getElementById("cardInput");
       const checkButton = document.getElementById("checkButton");
       const discountText = document.getElementById("discountText");
-      const couponBox = document.getElementById("couponBox");
+      const popupTitle = document.getElementById("popupTitle");
 
-      if (!isValidCardInput(cardInput)) {
-        result.innerHTML = "❌ Invalid card number. Please try again.";
-        result.style.color = "red";
+      // Reset UI
+      result.innerHTML = "";
+      couponBox.style.display = "none";
+      result.style.color = "#D9534F";
+
+      if (!/^\d{9}$/.test(input)) {
+        result.innerHTML = "Please enter exactly 9 digits.";
+        return;
+      }
+
+      if (!isValidCardInput(input)) {
+        result.innerHTML = "This doesn’t look like a valid card. Try again.";
         return;
       }
 
       loader.style.display = "block";
-      result.innerHTML = "";
 
-      setTimeout(() => {
+      try {
+        const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
+        const data = await res.json();
         loader.style.display = "none";
-        result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
-        result.style.color = "#5588D1";
-        couponCode.innerText = "FIRST30";
+
+        if (data.coupon === 1) {
+          result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
+          result.style.color = "#F39C12";
+          couponCode.innerText = "SAVE45";
+        } else if (data.coupon === 2) {
+          result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+          result.style.color = "#5588D1";
+          couponCode.innerText = "FIRST30";
+        } else {
+          result.innerHTML = "Something went wrong. Try again.";
+        }
 
         popupTitle.innerText = "Congratulations!";
         inputField.style.display = "none";
         checkButton.style.display = "none";
         discountText.style.display = "none";
         couponBox.style.display = "flex";
-      }, 3000); // Show loading animation for 3 seconds
+
+      } catch (error) {
+        loader.style.display = "none";
+        result.innerHTML = "🚫 Error connecting to server. Try again.";
+      }
     }
 
     function copyAndRedirect() {
-      const couponCode = document.getElementById("couponCode").textContent;
-
-      // Copy the coupon code to the clipboard
-      navigator.clipboard.writeText(couponCode).then(() => {
-        // Show the "Copied to clipboard" message
-        const copyMessage = document.getElementById("copyMessage");
-        copyMessage.style.display = "block";
-
-        // Redirect to a specific URL after a short delay
+      const code = document.getElementById("couponCode").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        document.getElementById("copyMessage").style.display = "block";
         setTimeout(() => {
-          window.location.href = "https://www.getcaramel.ai"; // Replace with your actual URL
-        }, 1000);
-      }).catch(err => {
-        console.error("Failed to copy coupon code: ", err);
-
-        // Fallback: Redirect even if copying fails
-        window.location.href = "https://www.getcaramel.ai";
+          window.location.href = "https://your-subscription-page.com"; // 🔁 Change this to your redirect URL
+        }, 1500);
       });
     }
   </script>
