@@ -8,7 +8,7 @@
   
   /* Body styling */
   body {
-    background-color: #FFFFFF; /* White background */
+    background: linear-gradient(135deg, #0061A5 0%, #003A6D 100%); /* Gradient using Dark Blue */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,49 +18,79 @@
   /* Popup container */
   .popup-container {
     background-color: #FFFFFF; /* White pop-up container */
-    padding: 20px; /* Reduced padding to make it less tall */
+    padding: 20px;
     border-radius: 12px;
     width: 100%;
     max-width: 400px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow */
     color: #09090B; /* Mostly Black for primary text */
-    height: 300px; /* Fixed height to prevent shifting */
+    height: 320px; /* Fixed height to prevent shifting */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Distribute space evenly */
+    position: relative;
+  }
+  
+  /* Festive header with gift and confetti */
+  .popup-header {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .popup-header::before,
+  .popup-header::after {
+    content: "🎉";
+    position: absolute;
+    font-size: 24px;
+    top: -10px;
+  }
+  
+  .popup-header::before {
+    left: 20px;
+    transform: rotate(-20deg);
+  }
+  
+  .popup-header::after {
+    right: 20px;
+    transform: rotate(20deg);
+  }
+  
+  .popup-header .gift-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
   }
   
   /* Popup title */
   .popup-title {
-    font-size: 22px; /* Slightly smaller for better proportion */
+    font-size: 20px;
     font-weight: bold;
     color: #0061A5; /* Dark Blue */
-    margin-bottom: 10px; /* Reduced margin */
+    margin-bottom: 5px;
   }
   
   /* Discount text */
   #discountText {
-    font-size: 14px; /* Smaller font to reduce space */
-    margin-bottom: 15px; /* Reduced margin */
-    transition: opacity 0.3s ease;
-    color: #A1A1AA; /* Dark Gray 2 for secondary text */
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #09090B; /* Mostly Black */
   }
   
   .discount-text {
+    font-size: 24px;
     font-weight: bold;
-    color: #5588D1; /* Gradient start color for emphasis */
+    color: #0061A5; /* Dark Blue */
   }
   
   /* Input field */
   .input-field {
     width: 100%;
-    padding: 10px; /* Reduced padding */
-    margin-bottom: 15px; /* Reduced margin */
-    border: 1px solid #A1A1AA; /* Dark Gray 2 */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #3F3F46; /* Dark Gray 1 */
     border-radius: 8px;
-    font-size: 14px; /* Smaller font */
-    background-color: #F9F9F9; /* Light gray background for contrast */
+    font-size: 14px;
+    background-color: #F9F9F9; /* Light gray background */
     color: #09090B; /* Mostly Black */
     transition: opacity 0.3s ease;
   }
@@ -72,25 +102,25 @@
   /* Buttons with gradient */
   .check-button,
   .copy-subscribe-btn {
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Correct gradient */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Your specified gradient */
     color: #FFFFFF;
-    padding: 10px 20px; /* Reduced padding */
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    font-size: 14px; /* Smaller font */
+    font-size: 14px;
     cursor: pointer;
     transition: opacity 0.3s ease, transform 0.2s ease;
   }
   
   .check-button:hover,
   .copy-subscribe-btn:hover {
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Maintain gradient on hover */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     transform: scale(1.05);
   }
   
   .check-button:disabled,
   .copy-subscribe-btn:disabled {
-    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Maintain gradient when disabled */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
     opacity: 0.6;
     cursor: not-allowed;
   }
@@ -106,7 +136,7 @@
   .copy-subscribe-btn.loading::after {
     content: "";
     position: absolute;
-    width: 16px; /* Smaller spinner */
+    width: 16px;
     height: 16px;
     top: 50%;
     left: 50%;
@@ -119,10 +149,10 @@
   
   /* Result message */
   .result-box {
-    margin: 10px 0; /* Reduced margin */
-    font-size: 14px; /* Smaller font */
+    margin: 10px 0;
+    font-size: 14px;
     min-height: 20px; /* Prevents layout shift */
-    flex-grow: 1; /* Allows it to take available space */
+    flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,29 +166,29 @@
   }
   
   .coupon-code-container {
-    margin-bottom: 10px; /* Reduced margin */
+    margin-bottom: 10px;
   }
   
   .coupon-code-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F9F9F9; /* Light gray background */
-    padding: 8px 12px; /* Reduced padding */
+    background-color: #F9F9F9;
+    padding: 8px 12px;
     border-radius: 8px;
-    border: 1px dashed #A1A1AA; /* Dark Gray 2 */
+    border: 1px dashed #3F3F46; /* Dark Gray 1 */
   }
   
   .coupon-code {
-    font-size: 16px; /* Smaller font */
+    font-size: 16px;
     font-weight: bold;
-    color: #5588D1; /* Gradient start color */
+    color: #0061A5; /* Dark Blue */
   }
   
   .copy-icon-btn {
     background: none;
     border: none;
-    font-size: 18px; /* Smaller icon */
+    font-size: 18px;
     margin-left: 8px;
     cursor: pointer;
     color: #A1A1AA; /* Dark Gray 2 */
@@ -171,8 +201,8 @@
   
   /* No thanks link */
   .no-thanks {
-    margin-top: 10px; /* Reduced margin */
-    font-size: 12px; /* Smaller font */
+    margin-top: 10px;
+    font-size: 12px;
     color: #A1A1AA; /* Dark Gray 2 */
     text-decoration: underline;
     cursor: pointer;
@@ -191,9 +221,9 @@
     transform: translateX(-50%);
     background-color: #0061A5; /* Dark Blue */
     color: #FFFFFF;
-    padding: 8px 16px; /* Reduced padding */
+    padding: 8px 16px;
     border-radius: 8px;
-    font-size: 12px; /* Smaller font */
+    font-size: 12px;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
@@ -213,12 +243,16 @@
   /* Responsive design */
   @media (max-width: 480px) {
     .popup-container {
-      padding: 15px; /* Reduced padding for smaller screens */
+      padding: 15px;
       max-width: 90%;
-      height: 280px; /* Slightly smaller height */
+      height: 300px;
     }
   
     .popup-title {
+      font-size: 18px;
+    }
+  
+    .discount-text {
       font-size: 20px;
     }
   

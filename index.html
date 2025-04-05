@@ -8,8 +8,11 @@
 </head>
 <body>
   <div class="popup-container">
-    <div class="popup-title" id="popupTitle">Unlock Your Exclusive Discount!</div>
-    <p id="discountText">Save up to <span class="discount-text">45%</span> instantly on your subscription.</p>
+    <div class="popup-header">
+      <div class="gift-icon">🎁</div>
+      <div class="popup-title" id="popupTitle">Unlock Your Exclusive Discount!</div>
+      <p id="discountText">Save up to <span class="discount-text">45%</span> in your next order.</p>
+    </div>
     <input type="text" id="cardInput" class="input-field" maxlength="9" placeholder="Enter first 9 digits" oninput="this.value=this.value.replace(/[^0-9]/g,'');"> 
     <button class="check-button" id="checkButton" onclick="validateCard()">Claim Offer</button>
     <div class="loader" id="loader"></div>
