@@ -93,7 +93,7 @@ body {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(90deg, #5588D1, #3366BB); /* Gradient background */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Gradient background */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -197,4 +197,8 @@ body {
 
 .copy-icon:hover {
     opacity: 0.8;
+}
+
+.button-container {
+    margin-top: 16px; /* Add spacing between the coupon code and the button */
 }
