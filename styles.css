@@ -113,6 +113,7 @@ body {
 
 .copy-subscribe-btn.loading {
     color: transparent; /* Hide text while loading */
+    background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%); /* Keep the same gradient background */
 }
 
 .copy-subscribe-btn.loading::after {
