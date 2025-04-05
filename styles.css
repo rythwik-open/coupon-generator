@@ -122,3 +122,20 @@ body {
     color: #D9534F;
     margin-top: 10px;
 }
+
+.coupon-code-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.copy-icon {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.copy-icon:hover {
+    opacity: 0.8;
+}

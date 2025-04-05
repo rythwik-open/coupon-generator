@@ -15,7 +15,10 @@
     <div class="loader" id="loader"></div>
     <div id="resultMessage" class="result-box"></div>
     <div class="coupon-box" id="couponBox">
-      <div class="coupon-code" id="couponCode">FIRST30</div>
+      <div class="coupon-code-container">
+        <div class="coupon-code" id="couponCode">FIRST30</div>
+        <button class="copy-icon" id="copyIcon" onclick="copyCouponCode()">📋</button>
+      </div>
       <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
       <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p>
     </div>
@@ -109,13 +112,16 @@
       }
     }
 
-    function copyAndRedirect() {
-      const code = document.getElementById("couponCode").innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        document.getElementById("copyMessage").style.display = "block";
+    function copyCouponCode() {
+      const couponCode = document.getElementById("couponCode").innerText;
+      navigator.clipboard.writeText(couponCode).then(() => {
+        const copyMessage = document.getElementById("copyMessage");
+        copyMessage.style.display = "block";
         setTimeout(() => {
-          window.location.href = "https://getcaramel.ai"; // 🔁 Change this to your redirect URL
-        }, 1500);
+          copyMessage.style.display = "none";
+        }, 2000);
+      }).catch(() => {
+        alert("Failed to copy the coupon code. Please try again.");
       });
     }
   </script>
