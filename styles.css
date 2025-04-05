@@ -59,14 +59,30 @@ body {
     align-items: center;
     margin-top: 20px;
 }
+.coupon-code-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: fit-content;
+}
 .coupon-code {
-    background: #F1F1F1;
-    padding: 10px 20px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    color: #0B3637;
+    color: #333;
+}
+.copy-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #5588D1;
+}
+.copy-icon-btn:hover {
+    color: #3366BB;
 }
 .copy-subscribe-btn {
     background: linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%);
@@ -138,16 +154,4 @@ body {
 
 .copy-icon:hover {
     opacity: 0.8;
-}
-
-.copy-icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #5588D1;
-}
-
-.copy-icon-btn:hover {
-    color: #3366BB;
 }

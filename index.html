@@ -16,10 +16,12 @@
     <div id="resultMessage" class="result-box"></div>
     <div class="coupon-box" id="couponBox">
       <div class="coupon-code-container">
-        <div class="coupon-code" id="couponCode">FIRST30</div>
-        <button class="copy-icon-btn" onclick="copyCouponCode()" title="Copy to clipboard">
-          📋
-        </button>
+        <div class="coupon-code-box">
+          <span class="coupon-code" id="couponCode">FIRST30</span>
+          <button class="copy-icon-btn" onclick="copyCouponCode()" title="Copy to clipboard">
+            📋
+          </button>
+        </div>
       </div>
       <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
       <p class="copy-message" id="copyMessage">✅ Copied to clipboard!</p>
