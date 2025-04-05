@@ -51,11 +51,11 @@ body {
     margin-bottom: 16px;
 }
 
-/* Buttons (Shared Styles) */
+/* Shared Button Styles */
 button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-flex; /* Use flexbox for better alignment */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
     font-size: 16px;
     font-weight: bold;
     color: white;
@@ -64,7 +64,9 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.3s ease;
-    position: relative;
+    position: relative; /* Required for positioning the spinner */
+    padding: 10px 20px; /* Padding for button content */
+    overflow: hidden; /* Prevent spinner from overflowing */
 }
 
 button:hover {
@@ -76,20 +78,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Check Offer Button */
-.check-button {
-    width: fit-content;
-    padding: 10px 20px;
-    margin: 10px auto;
-}
-
-/* Redeem Now Button */
-.copy-subscribe-btn {
-    width: 150px;
-    height: 40px;
-    margin-top: 20px;
-}
-
 /* Loading Spinner for Buttons */
 button.loading {
     color: transparent; /* Hide text while loading */
@@ -98,9 +86,9 @@ button.loading {
 button.loading::after {
     content: "";
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for exact centering */
     width: 16px;
     height: 16px;
     border: 3px solid #f3f3f3; /* Light gray */
