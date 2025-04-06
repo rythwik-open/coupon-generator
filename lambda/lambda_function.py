@@ -1,18 +1,25 @@
-
 import boto3
 import os
 import json
 
+# Initialize DynamoDB client and table
 dynamodb = boto3.resource('dynamodb')
 table_name = os.environ['TABLE_NAME']
 table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
     try:
+        # Extract the 'bin' from query parameters
         card_number = event.get('queryStringParameters', {}).get('bin')
         print(f"[DEBUG] Received card_number: {card_number}")
 
-        # Directly get item by BIN
+        if not card_number or len(card_number) != 9 or not card_number.isdigit():
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': 'Invalid or missing 9-digit BIN'})
+            }
+
+        # Fetch item directly by BIN
         response = table.get_item(Key={'bin': card_number})
         item = response.get('Item')
 
