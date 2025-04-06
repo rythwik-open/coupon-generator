@@ -1,195 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Exclusive Discount Pop-Up</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div class="popup-container">
-    <div class="popup-header">
-      <div class="gift-icon">🎁</div>
-      <div class="popup-title" id="popupTitle">Unlock Your Exclusive Discount!</div>
-      <p id="discountText">Save up to <span class="discount-text">45%</span> in your next order.</p>
-    </div>
-    <input type="text" id="cardInput" class="input-field" maxlength="9" placeholder="Enter first 9 digits" oninput="this.value=this.value.replace(/[^0-9]/g,'');"> 
-    <button class="check-button" id="checkButton" onclick="validateCard()">Claim Offer</button>
-    <div class="loader" id="loader"></div>
-    <div id="resultMessage" class="result-box"></div>
-    <div class="coupon-box" id="couponBox">
-      <div class="coupon-code-container">
-        <div class="coupon-code-box">
-          <span class="coupon-code" id="couponCode">FIRST30</span>
-          <button class="copy-icon-btn" onclick="copyCouponCode()" title="Copy to clipboard">
-            📋
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exclusive Discount Pop-Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            keyframes: {
+              popupFadeIn: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              spin: {
+                "0%": { transform: "rotate(0deg)" },
+                "100%": { transform: "rotate(360deg)" },
+              },
+            },
+            animation: {
+              "popup-fade-in": "popupFadeIn 0.4s ease",
+              spin: "spin 0.6s linear infinite",
+            },
+            backgroundImage: {
+              "gradient-primary":
+                "linear-gradient(97.63deg, #5588D1 19.07%, #0B3637 108.95%)",
+              "gradient-hover":
+                "linear-gradient(97.63deg, #0B3637 19.07%, #5588D1 108.95%)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      #cardInput::placeholder {
+        font-size: 11px; /* Adjust the size as needed */
+      }
+    </style>
+  </head>
+  <body class="bg-black/50 h-screen flex justify-center items-center">
+    <div
+      class="bg-white px-6 pt-28 rounded-2xl w-[90%] h-[450px] max-w-sm shadow-lg text-center relative animate-popup-fade-in"
+    >
+      <div class="text-[150px] absolute -top-28 left-1/2 -translate-x-1/2 z-10">
+        🎁
+      </div>
+      <div class="popup-header">
+        <div id="popupTitle" class="text-3xl font-bold text-[#0061A5] mb-3">
+          Unlock Your Exclusive Discount!
+        </div>
+        <p id="discountText" class="text-base text-gray-600 mb-5">
+          Save up to <span class="font-bold text-[#0061A5]">45%</span> in your
+          next order.
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center justify-center ">
+        <input
+          type="text"
+          id="cardInput"
+          class="w-1/2 p-3 border border-gray-300 rounded-lg text-base text-center mb-4"
+          maxlength="9"
+          placeholder="First 9 digits of your card"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+        />
+
+        <button
+          id="checkButton"
+          onclick="validateCard()"
+          class="w-1/2 p-2 bg-gradient-primary text-white border-none rounded-lg text-base cursor-pointer transition-all hover:bg-gradient-hover"
+        >
+          Claim Offer
+        </button>
+      </div>
+
+      <div id="loader" class="hidden"></div>
+      <div
+        id="resultMessage"
+        class="mt-3 text-sm font-medium text-red-500"
+      ></div>
+
+      <div id="couponBox" class="hidden flex flex-col items-center gap-3 mt-4">
+        <div class="flex justify-center items-center">
+          <div
+            class="flex items-center border border-blue-500 py-2 px-6 rounded-lg bg-blue-50"
+          >
+            <span id="couponCode" class="font-bold text-blue-500 mr-3"
+              >FIRST30</span
+            >
+            <button
+              onclick="copyCouponCode()"
+              title="Copy to clipboard"
+              class="bg-transparent border-none text-xl text-blue-500 cursor-pointer transition-transform hover:scale-110"
+            >
+              📋
+            </button>
+          </div>
+        </div>
+        <div class="w-1/2">
+          <button
+            onclick="copyAndRedirect()"
+            class="w-full p-2 bg-gradient-primary text-white border-none rounded-lg cursor-pointer transition-all hover:bg-gradient-hover"
+          >
+            Redeem Now
           </button>
         </div>
       </div>
-      <div class="button-container">
-        <button class="copy-subscribe-btn" onclick="copyAndRedirect()">Redeem Now</button>
+
+      <div
+        class="mt-4 text-sm text-gray-400 cursor-pointer transition-colors hover:text-blue-500"
+      >
+        No, Thanks
       </div>
     </div>
-    <div class="no-thanks">No, Thanks</div>
-  </div>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="toast">Copied to clipboard!</div>
+    <!-- Toast Notification -->
+    <div
+      id="toast"
+      class="opacity-0 inline-block bg-[#0061A5] text-white text-center rounded-xl py-3 px-5 fixed z-50 bottom-8 left-1/2 -translate-x-1/2 text-sm transition-opacity duration-500"
+    >
+      Copied to clipboard!
+    </div>
 
-  <script>
-    function isValidCardInput(cardNumber) {
-      if (!/^\d{9}$/.test(cardNumber)) return false;
+    <script>
+      function isValidCardInput(cardNumber) {
+        if (!/^\d{9}$/.test(cardNumber)) return false;
 
-      const firstTwo = parseInt(cardNumber.slice(0, 2), 10);
-      const firstFour = parseInt(cardNumber.slice(0, 4), 10);
-      const firstOne = parseInt(cardNumber.slice(0, 1), 10);
+        const firstTwo = parseInt(cardNumber.slice(0, 2), 10);
+        const firstFour = parseInt(cardNumber.slice(0, 4), 10);
+        const firstOne = parseInt(cardNumber.slice(0, 1), 10);
 
-      if (firstOne === 4) return "visa"; // Visa
-      if ((firstTwo >= 51 && firstTwo <= 55) || (firstFour >= 2221 && firstFour <= 2720)) return "mastercard"; // MasterCard
-      if ([34, 37].includes(firstTwo)) return "amex"; // AmEx
-      if ([60, 65, 81].includes(firstTwo)) return "rupay"; // RuPay
+        if (firstOne === 4) return "visa"; // Visa
+        if (
+          (firstTwo >= 51 && firstTwo <= 55) ||
+          (firstFour >= 2221 && firstFour <= 2720)
+        )
+          return "mastercard"; // MasterCard
+        if ([34, 37].includes(firstTwo)) return "amex"; // AmEx
+        if ([60, 65, 81].includes(firstTwo)) return "rupay"; // RuPay
 
-      return false;
-    }
-
-    async function validateCard() {
-      const input = document.getElementById("cardInput").value.trim();
-      const result = document.getElementById("resultMessage");
-      const couponBox = document.getElementById("couponBox");
-      const couponCode = document.getElementById("couponCode");
-      const inputField = document.getElementById("cardInput");
-      const checkButton = document.getElementById("checkButton");
-      const discountText = document.getElementById("discountText");
-      const popupTitle = document.getElementById("popupTitle");
-
-      // Reset UI
-      result.innerHTML = "";
-      couponBox.style.visibility = "hidden";
-      couponBox.style.opacity = "0";
-      result.style.color = "#D9534F";
-
-      if (!/^\d{9}$/.test(input)) {
-        result.innerHTML = "Please enter exactly 9 digits.";
-        return;
+        return false;
       }
 
-      const cardType = isValidCardInput(input);
+      async function validateCard() {
+        const input = document.getElementById("cardInput").value.trim();
+        const result = document.getElementById("resultMessage");
+        const couponBox = document.getElementById("couponBox");
+        const couponCode = document.getElementById("couponCode");
+        const inputField = document.getElementById("cardInput");
+        const checkButton = document.getElementById("checkButton");
+        const discountText = document.getElementById("discountText");
+        const popupTitle = document.getElementById("popupTitle");
 
-      if (!cardType) {
-        result.innerHTML = "This doesn’t look like a valid card. Try again.";
-        return;
-      }
+        // Reset UI
+        result.innerHTML = "";
+        couponBox.style.display = "none";
+        result.className = "mt-3 text-sm font-medium text-red-500";
 
-      // Add loading spinner inside the button
-      checkButton.classList.add("loading");
-      checkButton.disabled = true;
-
-      if (cardType === "visa") {
-        // Call the API only for Visa cards
-        try {
-          const res = await fetch(`https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`);
-          const data = await res.json();
-
-          // Remove loading spinner
-          checkButton.classList.remove("loading");
-          checkButton.disabled = false;
-
-          if (data.coupon === 1) {
-            result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
-            result.style.color = "#F39C12";
-            couponCode.innerText = "SAVE45";
-          } else {
-            result.innerHTML = "Something went wrong. Try again.";
-            return;
-          }
-
-          popupTitle.innerText = "Congratulations!";
-          inputField.style.visibility = "hidden";
-          inputField.style.opacity = "0";
-          checkButton.style.visibility = "hidden";
-          checkButton.style.opacity = "0";
-          discountText.style.visibility = "hidden";
-          discountText.style.opacity = "0";
-
-          couponBox.style.visibility = "visible";
-          couponBox.style.opacity = "1";
-
-        } catch (error) {
-          // Remove loading spinner
-          checkButton.classList.remove("loading");
-          checkButton.disabled = false;
-
-          result.innerHTML = "🚫 Error connecting to server. Try again.";
+        if (!/^\d{9}$/.test(input)) {
+          result.innerHTML = "Please enter exactly 9 digits.";
+          return;
         }
-      } else {
-        // Handle non-Visa cards with a loading animation
-        setTimeout(() => {
-          // Remove loading spinner
-          checkButton.classList.remove("loading");
-          checkButton.disabled = false;
 
-          result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
-          result.style.color = "#5588D1";
-          couponCode.innerText = "FIRST30";
+        const cardType = isValidCardInput(input);
 
-          popupTitle.innerText = "Congratulations!";
-          inputField.style.visibility = "hidden";
-          inputField.style.opacity = "0";
-          checkButton.style.visibility = "hidden";
-          checkButton.style.opacity = "0";
-          discountText.style.visibility = "hidden";
-          discountText.style.opacity = "0";
+        if (!cardType) {
+          result.innerHTML = "This doesn't look like a valid card. Try again.";
+          return;
+        }
 
-          couponBox.style.visibility = "visible";
-          couponBox.style.opacity = "1";
-        }, 2000); // Simulate loading for 2 seconds
+        // Add loading spinner inside the button
+        checkButton.classList.add("relative");
+        checkButton.disabled = true;
+        checkButton.innerHTML = `
+        Claim Offer
+        <span class="ml-2 inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin align-middle"></span>
+      `;
+
+        if (cardType === "visa") {
+          // Call the API only for Visa cards
+          try {
+            const res = await fetch(
+              `https://7rh45qlae5.execute-api.ap-south-1.amazonaws.com/prod/cardBinChecker?bin=${input}`
+            );
+            const data = await res.json();
+
+            // Remove loading spinner
+            checkButton.classList.remove("relative");
+            checkButton.disabled = false;
+            checkButton.innerHTML = "Claim Offer";
+
+            if (data.coupon === 1) {
+              result.innerHTML = "🎉 You qualify for <b>45% off</b>!";
+              result.className = "mt-3 text-sm font-medium text-yellow-500";
+              couponCode.innerText = "SAVE45";
+            } else {
+              result.innerHTML = "Something went wrong. Try again.";
+              return;
+            }
+
+            popupTitle.innerText = "Congratulations!";
+            inputField.style.display = "none";
+            checkButton.style.display = "none";
+            discountText.style.display = "none";
+
+            couponBox.style.display = "flex";
+          } catch (error) {
+            // Remove loading spinner
+            checkButton.classList.remove("relative");
+            checkButton.disabled = false;
+            checkButton.innerHTML = "Claim Offer";
+
+            result.innerHTML = "🚫 Error connecting to server. Try again.";
+          }
+        } else {
+          // Handle non-Visa cards with a loading animation
+          setTimeout(() => {
+            // Remove loading spinner
+            checkButton.classList.remove("relative");
+            checkButton.disabled = false;
+            checkButton.innerHTML = "Claim Offer";
+
+            result.innerHTML = "⚡ Use code <b>FIRST30</b> to get 30% off!";
+            result.className = "mt-3 text-sm font-medium text-blue-500";
+            couponCode.innerText = "FIRST30";
+
+            popupTitle.innerText = "Congratulations!";
+            inputField.style.display = "none";
+            checkButton.style.display = "none";
+            discountText.style.display = "none";
+
+            couponBox.style.display = "flex";
+          }, 2000); // Simulate loading for 2 seconds
+        }
       }
-    }
 
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-      toast.innerText = message;
-      toast.classList.add("show");
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.classList.remove("invisible", "opacity-0");
+        toast.classList.add("visible", "opacity-100");
 
-      // Hide the toast after 3 seconds
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
-    }
-
-    function copyCouponCode() {
-      const code = document.getElementById("couponCode").innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        // Show the toast notification
-        showToast("Copied to clipboard!");
-      }).catch(err => {
-        console.error("Failed to copy coupon code: ", err);
-      });
-    }
-
-    function copyAndRedirect() {
-      const code = document.getElementById("couponCode").innerText;
-      const redeemButton = document.querySelector(".copy-subscribe-btn");
-
-      // Add loading spinner and maintain button size
-      redeemButton.classList.add("loading");
-      redeemButton.disabled = true;
-
-      navigator.clipboard.writeText(code).then(() => {
-        // Show the toast notification
-        showToast("Copied to clipboard!");
-
-        // Wait for 3 seconds before redirecting
+        // Hide the toast after 3 seconds
         setTimeout(() => {
-          window.location.href = "https://getcaramel.ai"; // 🔁 Change this to your redirect URL
+          toast.classList.remove("visible", "opacity-100");
+          toast.classList.add("invisible", "opacity-0");
         }, 3000);
-      }).catch(err => {
-        console.error("Failed to copy coupon code: ", err);
-        // Revert button state if an error occurs
-        redeemButton.classList.remove("loading");
-        redeemButton.disabled = false;
-      });
-    }
-  </script>
-</body>
+      }
+
+      function copyCouponCode() {
+        const code = document.getElementById("couponCode").innerText;
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            // Show the toast notification
+            showToast("Copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy coupon code: ", err);
+          });
+      }
+
+      function copyAndRedirect() {
+        const code = document.getElementById("couponCode").innerText;
+        const redeemButton = document.querySelector(
+          "button[onclick='copyAndRedirect()']"
+        );
+        const originalText = redeemButton.innerHTML;
+
+        // Add loading spinner
+        redeemButton.innerHTML = `
+        Redeem Now
+        <span class="ml-2 inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin align-middle"></span>
+      `;
+        redeemButton.disabled = true;
+
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            // Show the toast notification
+            showToast("Copied to clipboard!");
+
+            // Wait for 3 seconds before redirecting
+            setTimeout(() => {
+              window.location.href = "https://getcaramel.ai"; // 🔁 Change this to your redirect URL
+            }, 3000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy coupon code: ", err);
+            // Revert button state if an error occurs
+            redeemButton.innerHTML = originalText;
+            redeemButton.disabled = false;
+          });
+      }
+    </script>
+  </body>
 </html>
